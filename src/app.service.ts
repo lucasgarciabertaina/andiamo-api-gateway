@@ -1,15 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import ZohoCRM from './zohoSDK';
+import { ZohoCRMService } from './zoho-crm/zoho-crm.service';
 require('dotenv').config();
 
 @Injectable()
 export class AppService {
-  toProcessSt(serviceBody: Object): Promise<string> {
-    ZohoCRM
-      .initialize()
-      .catch((error: void) => console.error('error', error))
-      .then((info: void) => console.info('info', info))
-      .finally((log: void) => console.log('log', log));
+  constructor(
+    private readonly zohoCRMService: ZohoCRMService
+  ) {}
+
+  async toProcessSt(serviceBody: Object): Promise<string> {
+    await this.zohoCRMService.init();
+    console.log('Example getting modules');
+    const modules = await this.zohoCRMService.getModules();
+    console.log('Modules:', modules);
     return new Promise(() => process.env.TEST || "TEST");
   }
 }
