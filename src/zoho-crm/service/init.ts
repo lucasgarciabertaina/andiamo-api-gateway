@@ -4,7 +4,7 @@ const {
   CLIENT_SECRET,
   REFRESH_TOKEN,
 } = process.env;
-const ZohoImporter: Function = require('@zohocrm/nodejs-sdk-5.0/lib/index.cjs');
+const ZohoImporter: Function = require('@lucasgarciabertaina/zohocrm-nodejs-sdk-5.0');
 const location = `${__dirname}/../../../documents/nodejssdk-tokens.txt`;
 
 export default async function init(): Promise<void> {
