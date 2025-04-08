@@ -1,23 +1,24 @@
 require('dotenv').config();
-const {
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REFRESH_TOKEN,
-} = process.env;
+const { CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN } = process.env;
 const ZohoImporter: Function = require('@lucasgarciabertaina/zohocrm-nodejs-sdk-5.0');
 const location = `${__dirname}/../../../documents/nodejssdk-tokens.txt`;
 
 export default async function init(): Promise<void> {
   const ZohoCRMClient = await ZohoImporter();
 
-  const { USDataCenter, OAuthBuilder, InitializeBuilder: BuildSetupInitializer, FileStore } = ZohoCRMClient;
+  const {
+    USDataCenter,
+    OAuthBuilder,
+    InitializeBuilder: BuildSetupInitializer,
+    FileStore,
+  } = ZohoCRMClient;
 
   const environment = USDataCenter.PRODUCTION();
   const token = new OAuthBuilder()
     .clientId(CLIENT_ID)
     .clientSecret(CLIENT_SECRET)
     .refreshToken(REFRESH_TOKEN)
-    .build();  
+    .build();
   const store = new FileStore(location);
 
   const setupInitializer = await new BuildSetupInitializer();
